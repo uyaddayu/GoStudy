@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -73,4 +74,37 @@ func main() {
 	s = "Hello World!"
 	s_map := strings.Map(map_func, s)
 	fmt.Println(s_map) // hELLO wORLD!
+
+	// Reader读字符串
+	s = "hello world"
+	// 创建 Reader
+	r := strings.NewReader(s)
+
+	fmt.Println(r)        // &{hello world 0 -1}
+	fmt.Println(r.Size()) // 11 获取字符串长度
+	fmt.Println(r.Len())  // 11 获取未读取长度
+
+	// 读取前6个字符
+	for r.Len() > 5 {
+		b, err := r.ReadByte() // 读取1 byte
+		fmt.Println(string(b), err, r.Len(), r.Size())
+		// h <nil> 10 11
+		// e <nil> 9 11
+		// l <nil> 8 11
+		// l <nil> 7 11
+		// o <nil> 6 11
+		//   <nil> 5 11
+	}
+
+	// 读取还未被读取字符串中5字符的数据
+	b_s := make([]byte, 5)
+	n, err := r.Read(b_s)
+	fmt.Println(string(b_s), n, err) // world 5 <nil>
+	fmt.Println(r.Size())            // 11
+	fmt.Println(r.Len())             // 0
+
+	s = "<p>Go Language</p>"
+	re := strings.NewReplacer("<", "1", ">", "0") // <替换成1，>替换成0
+	fmt.Println(re.Replace(s))                    // 替换后的字符串拷贝 1p0Go Language1/p0
+	re.WriteString(os.Stdout, s)                  // 输出到指定流中并执行所有替换 1p0Go Language1/p0
 }
