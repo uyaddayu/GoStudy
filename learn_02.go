@@ -18,4 +18,5 @@ func main() {
 	// 判断是否相等
 	fmt.Println(strings.EqualFold(str1, str2))
 	fmt.Println(str1 == str2)
+
 }
