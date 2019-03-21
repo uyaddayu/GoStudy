@@ -19,6 +19,8 @@ func main() {
 	// 判断是否相等
 	fmt.Println(strings.EqualFold(str1, str2)) // 试了下不区分大小写。。
 	fmt.Println(str1 == str2)                  // 这种够用了
+	fmt.Println(strings.Compare("你好", "你好"))   //0 效率更高一些，相等返回0，不相等返回1
+	fmt.Println(strings.Compare("das", "Das")) //1
 
 	var str string = "this is an example of a string"
 	fmt.Println(strings.HasPrefix(str, "th"))  // 判断前缀是否是某字符串
